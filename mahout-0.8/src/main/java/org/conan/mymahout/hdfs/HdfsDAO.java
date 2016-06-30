@@ -14,7 +14,7 @@ import org.apache.hadoop.mapred.JobConf;
 
 public class HdfsDAO {
 
-    private static final String HDFS = "hdfs://192.168.1.210:9000/";
+    private static final String HDFS = "hdfs://192.168.144.128:9000";
 
     public HdfsDAO(Configuration conf) {
         this(HDFS, conf);
@@ -29,10 +29,11 @@ public class HdfsDAO {
     private Configuration conf;
 
     public static void main(String[] args) throws IOException {
+        String localFile = HdfsDAO.class.getResource("/datafile/item.csv").getPath();
         JobConf conf = config();
         HdfsDAO hdfs = new HdfsDAO(conf);
-        hdfs.copyFile("datafile/item.csv", "/tmp/new");
-        hdfs.ls("/tmp/new");
+        hdfs.copyFile(localFile, "/tmp/zhongqiong");
+        hdfs.ls("/tmp/zhongqiong");
     }        
     
     public static JobConf config(){
@@ -118,23 +119,4 @@ public class HdfsDAO {
             fs.close();
           }
     }
-
-    public void location() throws IOException {
-        // String folder = hdfsPath + "create/";
-        // String file = "t2.txt";
-        // FileSystem fs = FileSystem.get(URI.create(hdfsPath), new
-        // Configuration());
-        // FileStatus f = fs.getFileStatus(new Path(folder + file));
-        // BlockLocation[] list = fs.getFileBlockLocations(f, 0, f.getLen());
-        //
-        // System.out.println("File Location: " + folder + file);
-        // for (BlockLocation bl : list) {
-        // String[] hosts = bl.getHosts();
-        // for (String host : hosts) {
-        // System.out.println("host:" + host);
-        // }
-        // }
-        // fs.close();
-    }
-
 }
