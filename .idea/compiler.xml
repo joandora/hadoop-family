@@ -19,13 +19,14 @@
       </profile>
       <profile default="false" name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="mahout-0.8" />
+        <module name="hadoop-1.1.2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="hadoop-1.1.2" target="1.7" />
       <module name="hadoop-family" target="1.7" />
       <module name="mahout-0.6" target="1.7" />
       <module name="mahout-0.8" target="1.7" />
