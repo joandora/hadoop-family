@@ -16,10 +16,10 @@ import org.conan.mymahout.hdfs.HdfsDAO;
 import org.conan.mymahout.recommendation.ItemCFHadoop;
 
 public class KmeansHadoop {
-    private static final String HDFS = "hdfs://192.168.1.210:9000";
+    private static final String HDFS = "hdfs://192.168.144.128:9000";
 
     public static void main(String[] args) throws Exception {
-        String localFile = "datafile/randomData.csv";
+        String localFile = HdfsDAO.class.getResource("/datafile/randomData.csv").getPath();
         String inPath = HDFS + "/user/hdfs/mix_data";
         String seqFile = inPath + "/seqfile";
         String seeds = inPath + "/seeds";
