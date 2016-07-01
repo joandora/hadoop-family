@@ -9,12 +9,13 @@ import org.conan.myhadoop.hdfs.HdfsDAO;
 
 public class Recommend {
 
-    public static final String HDFS = "hdfs://192.168.1.210:9000";
+    public static final String HDFS = "hdfs://192.168.144.128:9000";
     public static final Pattern DELIMITER = Pattern.compile("[\t,]");
 
     public static void main(String[] args) throws Exception {
         Map<String, String> path = new HashMap<String, String>();
-        path.put("data", "logfile/small.csv");
+        String localfile = Recommend.class.getResource("/logfile/small.csv").getPath();
+        path.put("data", localfile);
         path.put("Step1Input", HDFS + "/user/hdfs/recommend");
         path.put("Step1Output", path.get("Step1Input") + "/step1");
         path.put("Step2Input", path.get("Step1Output"));
