@@ -35,6 +35,7 @@ import org.apache.hadoop.util.Shell.ShellCommandExecutor;
 
 /**
  * A collection of file-processing util methods
+ * 因windows文件权限的原因，修改689行防止报错
  */
 public class FileUtil {
   private static final Log LOG = LogFactory.getLog(FileUtil.class);
