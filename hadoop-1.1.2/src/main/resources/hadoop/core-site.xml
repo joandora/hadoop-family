@@ -3,12 +3,12 @@
 
 <configuration>
   <property>
-    <name>fs.default.name</name>
-    <value>hdfs://master:9000</value>
-  </property>
+  <name>fs.default.name</name>
+  <value>hdfs://masterhadoop:9000</value>
+</property>
   <property>
     <name>hadoop.tmp.dir</name>
-    <value>/home/conan/hadoop/tmp</value>
+    <value>/home/teddy/hadoop/tmp</value>
   </property>
   <property>
     <name>io.sort.mb</name>

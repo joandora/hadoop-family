@@ -4,7 +4,7 @@
 <configuration>
   <property>
     <name>dfs.data.dir</name>
-    <value>/home/conan/hadoop/data</value>
+    <value>/home/teddy/hadoop/data</value>
   </property>
   <property>
     <name>dfs.replication</name>
