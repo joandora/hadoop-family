@@ -4,6 +4,6 @@
 <configuration>
   <property>
     <name>mapred.job.tracker</name>
-    <value>hdfs://master:9001</value>
+    <value>hdfs://masterhadoop:9001</value>
   </property>
 </configuration>
