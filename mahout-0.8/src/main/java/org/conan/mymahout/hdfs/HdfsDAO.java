@@ -12,6 +12,9 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.mapred.JobConf;
 
+/****
+ * 操作hdfs 创建文件夹  删除 查看文件列表 复制等功能
+ */
 public class HdfsDAO {
 
     private static final String HDFS = "hdfs://192.168.144.128:9000";
