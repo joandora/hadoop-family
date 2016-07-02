@@ -13,7 +13,6 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.conan.myhadoop.hdfs.HdfsDAO;
 
 import java.io.IOException;
-import java.util.StringTokenizer;
 
 /**
  * Created by teddy on 2016/7/2.
@@ -56,7 +55,7 @@ public class IntSort {
         return conf;
     }
     public static void main(String[] args) throws Exception{
-        String localfile1 = IntSort.class.getResource("/dedup_in/file2.txt").getPath();
+        String localfile1 = IntSort.class.getResource("/dedup_in/IntSort.txt").getPath();
         String inPath = HDFS + "/user/hdfs/dedup_in";
         String outPath = HDFS + "/user/hdfs/dedup_out";
         String outFile = outPath + "/part-r-00000";
@@ -100,10 +99,10 @@ public class IntSort {
  Delete: hdfs://192.168.144.128:9000/user/hdfs/dedup_in
  Delete: hdfs://192.168.144.128:9000/user/hdfs/dedup_out
  Create: hdfs://192.168.144.128:9000/user/hdfs/dedup_in
- copy from: /D:/joan/workspace/idea/hadoop-family/hadoop-1.1.2/target/classes/dedup_in/file2.txt to hdfs://192.168.144.128:9000/user/hdfs/dedup_in
+ copy from: /D:/joan/workspace/idea/hadoop-family/hadoop-1.1.2/target/classes/dedup_in/IntSort.txt to hdfs://192.168.144.128:9000/user/hdfs/dedup_in
  ls: hdfs://192.168.144.128:9000/user/hdfs/dedup_in
  ==========================================================
- name: hdfs://192.168.144.128:9000/user/hdfs/dedup_in/file2.txt, folder: false, size: 34
+ name: hdfs://192.168.144.128:9000/user/hdfs/dedup_in/IntSort.txt, folder: false, size: 34
  ==========================================================
 
  16/07/02 22:35:49 INFO mapred.JobClient:  map 0% reduce 0%
