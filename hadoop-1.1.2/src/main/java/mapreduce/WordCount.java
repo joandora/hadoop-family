@@ -1,4 +1,4 @@
-package mapreduce;
+package mapReduce;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
@@ -56,8 +56,8 @@ public class WordCount {
         return conf;
     }
     public static void main(String[] args) throws Exception{
-        String localfile1 = WordCount.class.getResource("/dedup_in/WordCount.txt").getPath();
-        String inPath = HDFS + "/user/hdfs/dedup_in";
+        String localfile1 = WordCount.class.getResource("/mapReduce/WordCount.txt").getPath();
+        String inPath = HDFS + "/user/hdfs/mapReduce";
         String outPath = HDFS + "/user/hdfs/dedup_out";
         String outFile = outPath + "/part-r-00000";
         JobConf jobConf = config();
@@ -97,13 +97,13 @@ public class WordCount {
 }
 /***
  *
- Delete: hdfs://192.168.144.128:9000/user/hdfs/dedup_in
+ Delete: hdfs://192.168.144.128:9000/user/hdfs/mapReduce
  Delete: hdfs://192.168.144.128:9000/user/hdfs/dedup_out
- Create: hdfs://192.168.144.128:9000/user/hdfs/dedup_in
- copy from: /D:/joan/workspace/idea/hadoop-family/hadoop-1.1.2/target/classes/dedup_in/WordCount.txt to hdfs://192.168.144.128:9000/user/hdfs/dedup_in
- ls: hdfs://192.168.144.128:9000/user/hdfs/dedup_in
+ Create: hdfs://192.168.144.128:9000/user/hdfs/mapReduce
+ copy from: /D:/joan/workspace/idea/hadoop-family/hadoop-1.1.2/target/classes/mapReduce/WordCount.txt to hdfs://192.168.144.128:9000/user/hdfs/mapReduce
+ ls: hdfs://192.168.144.128:9000/user/hdfs/mapReduce
  ==========================================================
- name: hdfs://192.168.144.128:9000/user/hdfs/dedup_in/WordCount.txt, folder: false, size: 27
+ name: hdfs://192.168.144.128:9000/user/hdfs/mapReduce/WordCount.txt, folder: false, size: 27
  ==========================================================
 
  16/07/02 16:44:42 INFO mapred.JobClient: Running job: job_201606301535_0022
