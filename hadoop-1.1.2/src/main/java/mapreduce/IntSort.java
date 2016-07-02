@@ -1,4 +1,4 @@
-package mapreduce;
+package mapReduce;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -55,8 +55,8 @@ public class IntSort {
         return conf;
     }
     public static void main(String[] args) throws Exception{
-        String localfile1 = IntSort.class.getResource("/dedup_in/IntSort.txt").getPath();
-        String inPath = HDFS + "/user/hdfs/dedup_in";
+        String localfile1 = IntSort.class.getResource("/mapReduce/IntSort.txt").getPath();
+        String inPath = HDFS + "/user/hdfs/mapReduce";
         String outPath = HDFS + "/user/hdfs/dedup_out";
         String outFile = outPath + "/part-r-00000";
         JobConf jobConf = config();
@@ -96,13 +96,13 @@ public class IntSort {
 }
 /***
  *
- Delete: hdfs://192.168.144.128:9000/user/hdfs/dedup_in
+ Delete: hdfs://192.168.144.128:9000/user/hdfs/mapReduce
  Delete: hdfs://192.168.144.128:9000/user/hdfs/dedup_out
- Create: hdfs://192.168.144.128:9000/user/hdfs/dedup_in
- copy from: /D:/joan/workspace/idea/hadoop-family/hadoop-1.1.2/target/classes/dedup_in/IntSort.txt to hdfs://192.168.144.128:9000/user/hdfs/dedup_in
- ls: hdfs://192.168.144.128:9000/user/hdfs/dedup_in
+ Create: hdfs://192.168.144.128:9000/user/hdfs/mapReduce
+ copy from: /D:/joan/workspace/idea/hadoop-family/hadoop-1.1.2/target/classes/mapReduce/IntSort.txt to hdfs://192.168.144.128:9000/user/hdfs/mapReduce
+ ls: hdfs://192.168.144.128:9000/user/hdfs/mapReduce
  ==========================================================
- name: hdfs://192.168.144.128:9000/user/hdfs/dedup_in/IntSort.txt, folder: false, size: 34
+ name: hdfs://192.168.144.128:9000/user/hdfs/mapReduce/IntSort.txt, folder: false, size: 34
  ==========================================================
 
  16/07/02 22:35:49 INFO mapred.JobClient:  map 0% reduce 0%
