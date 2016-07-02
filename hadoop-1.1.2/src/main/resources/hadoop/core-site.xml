@@ -4,7 +4,7 @@
 <configuration>
   <property>
   <name>fs.default.name</name>
-  <value>hdfs://masterhadoop:9000</value>
+  <value>hdfs://192.168.144.128:9000</value>
 </property>
   <property>
     <name>hadoop.tmp.dir</name>
