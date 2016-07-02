@@ -1,12 +1,10 @@
 package mapreduce;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapreduce.Job;
@@ -14,16 +12,13 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.apache.hadoop.util.GenericOptionsParser;
-import org.apache.tools.ant.filters.TokenFilter;
 import org.conan.myhadoop.hdfs.HdfsDAO;
-import org.conan.myhadoop.recommend.Recommend;
 
 /**
  * Created by teddy on 2016/7/2.
  * hadoop 例子 wordcount
  */
-public class Dedup {
+public class WordCount {
     public static final String HDFS = "hdfs://192.168.144.128:9000";
 
     public static class  TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
@@ -53,7 +48,7 @@ public class Dedup {
     }
 
     public static JobConf config() {
-        JobConf conf = new JobConf(Dedup.class);
+        JobConf conf = new JobConf(WordCount.class);
         conf.setJobName("ItemCFHadoop");
         conf.addResource("classpath:/hadoop/core-site.xml");
         conf.addResource("classpath:/hadoop/hdfs-site.xml");
@@ -61,7 +56,7 @@ public class Dedup {
         return conf;
     }
     public static void main(String[] args) throws Exception{
-        String localfile1 = Dedup.class.getResource("/dedup_in/file1.txt").getPath();
+        String localfile1 = WordCount.class.getResource("/dedup_in/file1.txt").getPath();
         String inPath = HDFS + "/user/hdfs/dedup_in";
         String outPath = HDFS + "/user/hdfs/dedup_out";
         String outFile = outPath + "/part-r-00000";
@@ -80,7 +75,7 @@ public class Dedup {
         conf.set("mapred.jar", "D:/joan/workspace/idea/hadoop-family/hadoop-1.1.2/target/hadoop-1.1.2-1.0-SNAPSHOT.jar");
 
         Job job = new Job(conf, "Data Deduplication");
-        job.setJarByClass(Dedup.class);
+        job.setJarByClass(WordCount.class);
 
         //设置Map、Combine和Reduce处理类
         job.setMapperClass(TokenizerMapper.class);
