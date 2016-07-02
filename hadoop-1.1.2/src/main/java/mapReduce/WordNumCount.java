@@ -1,4 +1,6 @@
 package mapReduce;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -12,42 +14,41 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.conan.myhadoop.hdfs.HdfsDAO;
 
-import java.io.IOException;
-
 /**
  * Created by teddy  on 2016/7/2.
- * hadoop 例子 数字排序
+ * hadoop 例子 wordcount
  */
-public class IntSort {
+public class WordNumCount {
     public static final String HDFS = "hdfs://192.168.144.128:9000";
-    //map将输入中的value化成IntWritable类型，作为输出的key
-    public static class IntSumMap extends Mapper<Object,Text,IntWritable,IntWritable>{
-        private static IntWritable data=new IntWritable();
-        //实现map函数
-        public void map(Object key,Text value,Context context) throws IOException,InterruptedException{
-            String line=value.toString();
-            data.set(Integer.parseInt(line));
-            context.write(data, new IntWritable(1));
-        }
-}
 
-    //reduce将输入中的key复制到输出数据的key上，
-    //然后根据输入的value-list中元素的个数决定key的输出次数
-    //用全局linenum来代表key的位次
-
-    public static class IntSumReducer extends Reducer<IntWritable,IntWritable,IntWritable,IntWritable>{
-        private static IntWritable linenum = new IntWritable(1);
-        //实现reduce函数
-        public void reduce(IntWritable key,Iterable<IntWritable> values,Context context) throws IOException,InterruptedException{
-            for(IntWritable val:values){
-                context.write(linenum, key);
-                linenum = new IntWritable(linenum.get()+1);
+    public static class  TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
+        /**计数为1**/
+        private final static IntWritable one = new IntWritable(1);
+        /**代表一个单词**/
+        private Text word = new Text();
+        /**按空格分割每个单词，并计数为1**/
+        public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+            StringTokenizer itr = new StringTokenizer(value.toString());
+            while (itr.hasMoreTokens()) {
+                word.set(itr.nextToken());
+                context.write(word, one);
             }
         }
-}
+    }
+    public static class  IntSumReducer extends Reducer<Text,IntWritable,Text,IntWritable> {
+        private IntWritable result = new IntWritable();
+        public void reduce(Text key, Iterable<IntWritable> values,Context context) throws IOException, InterruptedException {
+            int sum = 0;
+            for (IntWritable val : values) {
+                sum += val.get();
+            }
+            result.set(sum);
+            context.write(key, result);
+        }
+    }
 
     public static JobConf config() {
-        JobConf conf = new JobConf(IntSort.class);
+        JobConf conf = new JobConf(WordNumCount.class);
         conf.setJobName("ItemCFHadoop");
         conf.addResource("classpath:/hadoop/core-site.xml");
         conf.addResource("classpath:/hadoop/hdfs-site.xml");
@@ -55,7 +56,7 @@ public class IntSort {
         return conf;
     }
     public static void main(String[] args) throws Exception{
-        String localfile1 = IntSort.class.getResource("/mapReduce/IntSort.txt").getPath();
+        String localfile1 = WordNumCount.class.getResource("/mapReduce/WordCount.txt").getPath();
         String inPath = HDFS + "/user/hdfs/mapReduce";
         String outPath = HDFS + "/user/hdfs/dedup_out";
         String outFile = outPath + "/part-r-00000";
@@ -74,15 +75,15 @@ public class IntSort {
         conf.set("mapred.jar", "D:/joan/workspace/idea/hadoop-family/hadoop-1.1.2/target/hadoop-1.1.2-1.0-SNAPSHOT.jar");
 
         Job job = new Job(conf, "Data Deduplication");
-        job.setJarByClass(IntSort.class);
+        job.setJarByClass(WordNumCount.class);
 
         //设置Map、Combine和Reduce处理类
-        job.setMapperClass(IntSumMap.class);
-//        job.setCombinerClass(IntSumReducer.class);
+        job.setMapperClass(TokenizerMapper.class);
+        job.setCombinerClass(IntSumReducer.class);
         job.setReducerClass(IntSumReducer.class);
 
         //设置输出类型
-        job.setOutputKeyClass(IntWritable.class);
+        job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 
         //设置输入和输出目录
@@ -99,28 +100,20 @@ public class IntSort {
  Delete: hdfs://192.168.144.128:9000/user/hdfs/mapReduce
  Delete: hdfs://192.168.144.128:9000/user/hdfs/dedup_out
  Create: hdfs://192.168.144.128:9000/user/hdfs/mapReduce
- copy from: /D:/joan/workspace/idea/hadoop-family/hadoop-1.1.2/target/classes/mapReduce/IntSort.txt to hdfs://192.168.144.128:9000/user/hdfs/mapReduce
+ copy from: /D:/joan/workspace/idea/hadoop-family/hadoop-1.1.2/target/classes/mapReduce/WordNumCount.txt to hdfs://192.168.144.128:9000/user/hdfs/mapReduce
  ls: hdfs://192.168.144.128:9000/user/hdfs/mapReduce
  ==========================================================
- name: hdfs://192.168.144.128:9000/user/hdfs/mapReduce/IntSort.txt, folder: false, size: 34
+ name: hdfs://192.168.144.128:9000/user/hdfs/mapReduce/WordNumCount.txt, folder: false, size: 27
  ==========================================================
 
- 16/07/02 22:35:49 INFO mapred.JobClient:  map 0% reduce 0%
- 16/07/02 22:35:55 INFO mapred.JobClient:  map 100% reduce 0%
- 16/07/02 22:36:04 INFO mapred.JobClient:  map 100% reduce 33%
- 16/07/02 22:36:05 INFO mapred.JobClient:  map 100% reduce 100%
+ 16/07/02 16:44:42 INFO mapred.JobClient: Running job: job_201606301535_0022
+ 16/07/02 16:44:43 INFO mapred.JobClient:  map 0% reduce 0%
+ 16/07/02 16:44:49 INFO mapred.JobClient:  map 100% reduce 0%
+ 16/07/02 16:44:57 INFO mapred.JobClient:  map 100% reduce 33%
+ 16/07/02 16:44:59 INFO mapred.JobClient:  map 100% reduce 100%
 
  cat: hdfs://192.168.144.128:9000/user/hdfs/dedup_out/part-r-00000
- 1	1
- 2	2
- 3	3
- 4	4
- 5	5
- 6	6
- 7	7
- 8	8
- 9	9
- 10	10
- 11	11
- 12	12
+ hadoop	1
+ hellow	2
+ world	1
  */
