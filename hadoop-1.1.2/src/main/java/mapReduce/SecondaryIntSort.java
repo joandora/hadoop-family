@@ -59,7 +59,7 @@ public class SecondaryIntSort {
         return conf;
     }
     public static void main(String[] args) throws Exception{
-        String localfile1 = ScoreAverage.class.getResource("/mapReduce/SecondarySort.txt").getPath();
+        String localfile1 = ScoreAverage.class.getResource("/mapReduce/SecondaryIntSort.txt").getPath();
         String inPath = HDFS + "/user/hdfs/mapReduce";
         String outPath = HDFS + "/user/hdfs/dedup_out";
         String outFile = outPath + "/part-r-00000";

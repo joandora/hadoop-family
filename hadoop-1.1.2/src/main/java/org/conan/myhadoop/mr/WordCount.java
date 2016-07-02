@@ -57,7 +57,7 @@ public class WordCount {
         String output = "hdfs://192.168.1.210:9000/user/hdfs/o_t_account/result";
 
         JobConf conf = new JobConf(WordCount.class);
-        conf.setJobName("WordCount");
+        conf.setJobName("WordNumCount");
         conf.addResource("classpath:/hadoop/core-site.xml");
         conf.addResource("classpath:/hadoop/hdfs-site.xml");
         conf.addResource("classpath:/hadoop/mapred-site.xml");

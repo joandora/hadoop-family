@@ -71,7 +71,7 @@ public class ScoreAverage {
         return conf;
     }
     public static void main(String[] args) throws Exception{
-        String localfile1 = ScoreAverage.class.getResource("/mapReduce/Score.txt").getPath();
+        String localfile1 = ScoreAverage.class.getResource("/mapReduce/ScoreAverage.txt").getPath();
         String inPath = HDFS + "/user/hdfs/mapReduce";
         String outPath = HDFS + "/user/hdfs/dedup_out";
         String outFile = outPath + "/part-r-00000";

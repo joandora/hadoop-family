@@ -56,7 +56,7 @@ public class WordNumCount {
         return conf;
     }
     public static void main(String[] args) throws Exception{
-        String localfile1 = WordNumCount.class.getResource("/mapReduce/WordCount.txt").getPath();
+        String localfile1 = WordNumCount.class.getResource("/mapReduce/WordNumCount.txt").getPath();
         String inPath = HDFS + "/user/hdfs/mapReduce";
         String outPath = HDFS + "/user/hdfs/dedup_out";
         String outFile = outPath + "/part-r-00000";
