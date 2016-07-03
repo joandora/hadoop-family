@@ -23,6 +23,8 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="hadoop-1.1.2" />
+        <module name="mahout-0.6" />
+        <module name="mahout-0.8" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

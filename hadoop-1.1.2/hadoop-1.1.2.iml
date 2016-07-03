@@ -21,6 +21,7 @@
     <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.3-1" level="project" />
     <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.2.2" level="project" />
     <orderEntry type="library" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-jaxrs:1.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-xc:1.7.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-server:1.8" level="project" />
@@ -58,46 +59,5 @@
     <orderEntry type="library" name="Maven: javax.mail:mail:1.4" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: jline:jline:0.9.94" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.mahout:mahout-core:0.8" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.mahout:mahout-math:0.8" level="project" />
-    <orderEntry type="library" name="Maven: com.google.guava:guava:14.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.12" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.1" level="project" />
-    <orderEntry type="library" name="Maven: com.thoughtworks.xstream:xstream:1.4.4" level="project" />
-    <orderEntry type="library" name="Maven: xmlpull:xmlpull:1.1.3.1" level="project" />
-    <orderEntry type="library" name="Maven: xpp3:xpp3_min:1.1.4c" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:4.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:4.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.mahout.commons:commons-cli:2.0-mahout" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-math3:3.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.mrunit:mrunit:hadoop1:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.mockito:mockito-all:1.8.5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.mahout:mahout-integration:0.8" level="project" />
-    <orderEntry type="library" name="Maven: commons-dbcp:commons-dbcp:1.4" level="project" />
-    <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.6" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.solr:solr-commons-csv:3.5.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-benchmark:4.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-highlighter:4.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queries:4.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-memory:4.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queryparser:4.3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-sandbox:4.3.0" level="project" />
-    <orderEntry type="library" name="Maven: jakarta-regexp:jakarta-regexp:1.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-facet:4.3.0" level="project" />
-    <orderEntry type="library" name="Maven: com.ibm.icu:icu4j:49.1" level="project" />
-    <orderEntry type="library" name="Maven: net.sourceforge.nekohtml:nekohtml:1.9.17" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.4.1" level="project" />
-    <orderEntry type="library" name="Maven: xerces:xercesImpl:2.9.1" level="project" />
-    <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:2.11.1" level="project" />
-    <orderEntry type="library" name="Maven: org.mongodb:bson:2.11.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.hbase:hbase-client:0.95.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.hbase:hbase-common:0.95.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.hbase:hbase-protocol:0.95.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:2.4.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.zookeeper:zookeeper:3.4.5" level="project" />
-    <orderEntry type="library" name="Maven: org.cloudera.htrace:htrace:1.50" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty:3.5.9.Final" level="project" />
-    <orderEntry type="library" name="Maven: com.github.stephenc.findbugs:findbugs-annotations:1.3.9-1" level="project" />
   </component>
 </module>
