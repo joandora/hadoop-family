@@ -1,2 +1,11 @@
-hellow world
-hellow hadoop
+There is also a similar value, null
+whose meaning is this value is defined
+but it does not have a value
+The difference in meaning between
+undefined and null is mostly academic
+and usually not very interesting
+In practical programs
+it is often necessary to check whether something has a value
+In these cases the expression something is undefined may be used
+because even though they are not exactly the same value
+null is undefined will produce true
