@@ -14,9 +14,9 @@ public class JobConfUtils {
     public static JobConf getJobConf(Class<?> clazz, String itemCFHadoop){
         JobConf conf = new JobConf(clazz);
         conf.setJobName("itemCFHadoop");
-        conf.addResource("classpath:/hadoop/core-site.xml");
-        conf.addResource("classpath:/hadoop/hdfs-site.xml");
-        conf.addResource("classpath:/hadoop/mapred-site.xml");
+//        conf.addResource("classpath:/hadoop/core-site.xml");
+//        conf.addResource("classpath:/hadoop/hdfs-site.xml");
+//        conf.addResource("classpath:/hadoop/mapred-site.xml");
         return conf;
     }
 }

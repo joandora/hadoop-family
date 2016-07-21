@@ -94,12 +94,26 @@ public class WordNumCount {
         job.setJarByClass(WordNumCount.class);
 
         //设置Map、Combine和Reduce处理类
+        //设置mapper类
         job.setMapperClass(TokenizerMapper.class);
+        /**
+         * 设置合并函数，合并函数的输出作为Reducer的输入，
+         * 提高性能，能有效的降低map和reduce之间数据传输量。
+         * 但是合并函数不能滥用。需要结合具体的业务。
+         * 由于本次应用是统计单词个数，所以使用合并函数不会对结果或者说
+         * 业务逻辑结果产生影响。
+         * 当对于结果产生影响的时候，是不能使用合并函数的。
+         * 例如：我们统计单词出现的平均值的业务逻辑时，就不能使用合并
+         * 函数。此时如果使用，会影响最终的结果。
+         */
         job.setCombinerClass(IntSumReducer.class);
+        //设置reduce类
         job.setReducerClass(IntSumReducer.class);
 
         //设置输出类型
+        //对应单词字符串
         job.setOutputKeyClass(Text.class);
+        //对应单词的统计个数 int类型
         job.setOutputValueClass(IntWritable.class);
 
         //设置输入和输出目录
@@ -107,7 +121,6 @@ public class WordNumCount {
         FileOutputFormat.setOutputPath(job, new Path(outPath));
         while(job.waitForCompletion(true)){
             hdfs.cat(outFile);
-            hdfs.close();
             System.exit(0);
         }
     }
