@@ -19,7 +19,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 /**
- * Created by teddy on 2016/7/3.
+ * Created by jodndora on 2016/7/3.
  */
 public class PartitionerDemo {
     public static final String HDFS = "hdfs://192.168.144.128:9000";
