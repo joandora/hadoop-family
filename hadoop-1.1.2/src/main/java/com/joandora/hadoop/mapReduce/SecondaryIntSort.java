@@ -1,18 +1,20 @@
-package mapReduce;
+package com.joandora.hadoop.mapReduce;
 
+import com.joandora.hadoop.hdfs.HDFSUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.*;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Partitioner;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-import org.conan.myhadoop.hdfs.HdfsDAO;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -20,14 +22,15 @@ import java.io.IOException;
 
 /**
  * Created by teddy on 2016/7/3.
+ * 二次排序，当第一个字段相同时 则对第二个字段进行排序
  */
-public class PartitionerDemo {
+public class SecondaryIntSort {
     public static final String HDFS = "hdfs://192.168.144.128:9000";
 
-    public static class SecondarySortMapper extends Mapper<LongWritable, Text, IntPair, IntWritable> {
-        final IntPair k2 = new IntPair();
+    public static class SecondarySortMapper extends Mapper<LongWritable, Text, TwoInt, IntWritable>{
+        final TwoInt k2 = new TwoInt();
         final IntWritable v2 = new IntWritable();
-        protected void map(LongWritable key, Text value, org.apache.hadoop.mapreduce.Mapper<LongWritable,Text,IntPair,IntWritable>.Context context) throws java.io.IOException ,InterruptedException {
+        protected void map(LongWritable key, Text value, org.apache.hadoop.mapreduce.Mapper<LongWritable,Text,TwoInt,IntWritable>.Context context) throws java.io.IOException ,InterruptedException {
             final String[] splited = value.toString().split(" ");
             k2.set(Integer.parseInt(splited[0]), Integer.parseInt(splited[1]));
             v2.set(Integer.parseInt(splited[1]));
@@ -36,9 +39,9 @@ public class PartitionerDemo {
     }
 
     //排序后，会产生6个组
-    public static class SecondarySortReducer extends Reducer<IntPair, IntWritable, IntWritable, IntWritable> {
+    public static class SecondarySortReducer extends Reducer<TwoInt, IntWritable, IntWritable, IntWritable>{
         final IntWritable k3 = new IntWritable();
-        protected void reduce(IntPair key2, java.lang.Iterable<IntWritable> value2s, org.apache.hadoop.mapreduce.Reducer<IntPair,IntWritable,IntWritable,IntWritable>.Context context) throws java.io.IOException ,InterruptedException {
+        protected void reduce(TwoInt key2, java.lang.Iterable<IntWritable> value2s, org.apache.hadoop.mapreduce.Reducer<TwoInt,IntWritable,IntWritable,IntWritable>.Context context) throws java.io.IOException ,InterruptedException {
             k3.set(key2.first);
             for (IntWritable value2 : value2s) {
                 context.write(k3, value2);
@@ -56,12 +59,12 @@ public class PartitionerDemo {
         return conf;
     }
     public static void main(String[] args) throws Exception{
-        String localfile1 = PartitionerDemo.class.getResource("/mapReduce/SecondaryIntSort.txt").getPath();
+        String localfile1 = SecondaryIntSort.class.getResource("/mapReduce/SecondaryIntSort.txt").getPath();
         String inPath = HDFS + "/user/hdfs/mapReduce";
         String outPath = HDFS + "/user/hdfs/dedup_out";
         String outFile = outPath + "/part-r-00000";
         JobConf jobConf = config();
-        HdfsDAO hdfs = new HdfsDAO(HDFS, jobConf);
+        HDFSUtils hdfs = new HDFSUtils(HDFS, jobConf);
         hdfs.rmr(inPath);
         hdfs.rmr(outPath);
         hdfs.mkdirs(inPath);
@@ -79,13 +82,12 @@ public class PartitionerDemo {
 
         //设置Map、Combine和Reduce处理类
         job.setMapperClass(SecondarySortMapper.class);
-        job.setPartitionerClass(FirstPartitioner.class);
         job.setReducerClass(SecondarySortReducer.class);
 
         //设置输出类型
         job.setOutputKeyClass(IntWritable.class);
         job.setOutputValueClass(IntWritable.class);
-        job.setMapOutputKeyClass(IntPair.class);
+        job.setMapOutputKeyClass(TwoInt.class);
         job.setMapOutputValueClass(IntWritable.class);
         // 将输入的数据集分割成小数据块splites，提供一个RecordReder的实现
         job.setInputFormatClass(TextInputFormat.class);
@@ -100,93 +102,40 @@ public class PartitionerDemo {
             System.exit(0);
         }
     }
-    /**
-     * <pre>
-     * Partitioner的作用就是决定选择哪一个reducer
-     * 但是对于key是对象来说，每一个key的hashcode都有可能会不一样，这样就会造成相同的key落到不同的reducer
-     * 在这个例子中key对象为IntPair，其实尅通过重写IntPair的hashcode和equals方法既可以
-     * Partitioner只是有自己的路由规则，进行自定义
-     * </pre>
-     */
-    public static class FirstPartitioner extends Partitioner<IntPair,IntWritable> {
-        @Override
-        public int getPartition(IntPair key, IntWritable value, int numPartitions) {
-            return Math.abs(key.getFirst() * 127) % numPartitions;
-        }
-    }
-    /**
-     * Define a pair of integers that are writable.
-     * They are serialized in a byte comparable format.
-     */
-    public static class IntPair implements WritableComparable<IntPair> {
-        private int first = 0;
-        private int second = 0;
+    /**为二次排序创建的实体**/
+    public static class TwoInt implements WritableComparable<TwoInt> {
+        int first;
+        int second;
 
-        /**
-         * Set the left and right values.
-         */
-        public void set(int left, int right) {
-            first = left;
-            second = right;
+        public void set(int first, int second) {
+            this.first = first;
+            this.second = second;
         }
-        public int getFirst() {
-            return first;
-        }
-        public int getSecond() {
-            return second;
-        }
-        /**
-         * Read the two integers.
-         * Encoded as: MIN_VALUE -> 0, 0 -> -MIN_VALUE, MAX_VALUE-> -1
-         */
-        @Override
-        public void readFields(DataInput in) throws IOException {
-            first = in.readInt() + Integer.MIN_VALUE;
-            second = in.readInt() + Integer.MIN_VALUE;
-        }
+
         @Override
         public void write(DataOutput out) throws IOException {
-            out.writeInt(first - Integer.MIN_VALUE);
-            out.writeInt(second - Integer.MIN_VALUE);
+            out.writeInt(this.first);
+            out.writeInt(this.second);
         }
+
         @Override
-        public int hashCode() {
-            return first * 157 + second;
+        public void readFields(DataInput in) throws IOException {
+            this.first = in.readInt();
+            this.second = in.readInt();
         }
+
+        /**
+         * 先比较first，如果first相同，再比较second
+         * @param o
+         * @return
+         */
+
         @Override
-        public boolean equals(Object right) {
-            if (right instanceof IntPair) {
-                IntPair r = (IntPair) right;
-                return r.first == first && r.second == second;
+        public int compareTo(TwoInt o) {
+            if(this.first!=o.first) {
+                return this.first-o.first;
             } else {
-                return false;
-            }
-        }
-
-        /** A Comparator that compares serialized IntPair. */
-        public static class Comparator extends WritableComparator {
-            public Comparator() {
-                super(IntPair.class);
-            }
-
-            public int compare(byte[] b1, int s1, int l1,
-                               byte[] b2, int s2, int l2) {
-                return compareBytes(b1, s1, l1, b2, s2, l2);
-            }
-        }
-
-        static {                                        // register this comparator
-            WritableComparator.define(IntPair.class, new Comparator());
-        }
-
-        @Override
-        public int compareTo(IntPair o) {
-            if (first != o.first) {
-                return first < o.first ? -1 : 1;
-            } else if (second != o.second) {
-                return second < o.second ? -1 : 1;
-            } else {
-                return 0;
+                return this.second - o.second;
             }
         }
     }

@@ -1,10 +1,11 @@
-package org.conan.myhadoop.matrix;
+package com.joandora.hadoop.mapReduce.matrix;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.joandora.hadoop.hdfs.JobConfUtils;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
@@ -20,6 +21,10 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.conan.myhadoop.hdfs.HdfsDAO;
 
+/****
+ * 稀疏矩阵，为了节省存储空间，通常只会存储非0的数据<br>
+ * sm1.csv、sm2.csv数据内容已经是稀疏矩阵
+ */
 public class SparseMartrixMultiply {
 
     public static class SparseMatrixMapper extends Mapper<LongWritable, Text, Text, Text> {
@@ -33,6 +38,7 @@ public class SparseMartrixMultiply {
         protected void setup(Context context) throws IOException, InterruptedException {
             FileSplit split = (FileSplit) context.getInputSplit();
             flag = split.getPath().getName();// 判断读的数据集
+            System.out.println("------------------"+flag);
         }
 
         @Override
@@ -47,7 +53,7 @@ public class SparseMartrixMultiply {
                     Text k = new Text(row + "," + i);
                     Text v = new Text("A:" + col + "," + val);
                     context.write(k, v);
-                    System.out.println(k.toString() + "  " + v.toString());
+                    System.out.println(flag+"-map-"+i+":"+k.toString() + "  " + v.toString());
                 }
 
             } else if (flag.equals("m2")) {
@@ -59,7 +65,7 @@ public class SparseMartrixMultiply {
                     Text k = new Text(i + "," + col);
                     Text v = new Text("B:" + row + "," + val);
                     context.write(k, v);
-                    System.out.println(k.toString() + "  " + v.toString());
+                    System.out.println(flag+"-map-"+i+":"+k.toString() + "  " + v.toString());
 
                 }
             }
@@ -118,7 +124,7 @@ public class SparseMartrixMultiply {
         String input2 = path.get("input2");
         String output = path.get("output");
 
-        HdfsDAO hdfs = new HdfsDAO(MainRun.HDFS, conf);
+        HdfsDAO hdfs = new HdfsDAO(JobConfUtils.HDFS_URL, conf);
         hdfs.rmr(input);
         hdfs.mkdirs(input);
         hdfs.copyFile(path.get("m1"), input1);

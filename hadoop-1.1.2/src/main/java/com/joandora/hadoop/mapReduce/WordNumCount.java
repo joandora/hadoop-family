@@ -1,4 +1,4 @@
-package mapReduce;
+package com.joandora.hadoop.mapReduce;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
@@ -14,7 +14,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.conan.myhadoop.hdfs.HdfsDAO;
 
 /**
  * Created by teddy  on 2016/7/2.

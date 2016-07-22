@@ -1,5 +1,6 @@
-package mapReduce;
+package com.joandora.hadoop.mapReduce;
 
+import com.joandora.hadoop.hdfs.HDFSUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.*;
@@ -11,7 +12,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-import org.conan.myhadoop.hdfs.HdfsDAO;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -62,7 +62,7 @@ public class GroupingComparator {
         String outPath = HDFS + "/user/hdfs/dedup_out";
         String outFile = outPath + "/part-r-00000";
         JobConf jobConf = config();
-        HdfsDAO hdfs = new HdfsDAO(HDFS, jobConf);
+        HDFSUtils hdfs = new HDFSUtils(HDFS, jobConf);
         hdfs.rmr(inPath);
         hdfs.rmr(outPath);
         hdfs.mkdirs(inPath);

@@ -1,23 +1,13 @@
-package org.conan.myhadoop.mr.kpi;
+package com.joandora.hadoop.mapReduce.kpi;
+
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapred.*;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.FileOutputFormat;
-import org.apache.hadoop.mapred.JobClient;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.MapReduceBase;
-import org.apache.hadoop.mapred.Mapper;
-import org.apache.hadoop.mapred.OutputCollector;
-import org.apache.hadoop.mapred.Reducer;
-import org.apache.hadoop.mapred.Reporter;
-import org.apache.hadoop.mapred.TextInputFormat;
-import org.apache.hadoop.mapred.TextOutputFormat;
 
 public class KPIIP {
 
@@ -27,7 +17,7 @@ public class KPIIP {
 
         @Override
         public void map(Object key, Text value, OutputCollector<Text, Text> output, Reporter reporter) throws IOException {
-            KPI kpi = KPI.filterIPs(value.toString());
+            KPIEntity kpi = KPIEntity.filterIPs(value.toString());
             if (kpi.isValid()) {
                 word.set(kpi.getRequest());
                 ips.set(kpi.getRemote_addr());

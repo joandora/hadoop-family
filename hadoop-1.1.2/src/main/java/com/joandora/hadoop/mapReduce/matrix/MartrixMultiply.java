@@ -1,10 +1,11 @@
-package org.conan.myhadoop.matrix;
+package com.joandora.hadoop.mapReduce.matrix;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.joandora.hadoop.hdfs.JobConfUtils;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
@@ -20,6 +21,9 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.conan.myhadoop.hdfs.HdfsDAO;
 
+/***
+ * 矩阵乘法
+ */
 public class MartrixMultiply {
 
     public static class MatrixMapper extends Mapper<LongWritable, Text, Text, Text> {
@@ -116,7 +120,7 @@ public class MartrixMultiply {
         String input2 = path.get("input2");
         String output = path.get("output");
 
-        HdfsDAO hdfs = new HdfsDAO(MainRun.HDFS, conf);
+        HdfsDAO hdfs = new HdfsDAO(JobConfUtils.HDFS_URL, conf);
         hdfs.rmr(input);
         hdfs.mkdirs(input);
         hdfs.copyFile(path.get("m1"), input1);

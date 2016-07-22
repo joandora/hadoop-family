@@ -1,6 +1,5 @@
 package com.joandora.hadoop.hdfs;
 
-import mapReduce.WordNumCount;
 import org.apache.hadoop.mapred.JobConf;
 
 /**
