@@ -12,6 +12,7 @@ import org.apache.hadoop.mapred.JobConf;
  * 延时矩阵乘法
  * MartrixMultiply：矩阵乘法
  * SparseMartrixMultiply: 稀疏矩阵乘法
+ * http://blog.fens.me/tag/%E7%9F%A9%E9%98%B5/
  * </pre>
  */
 public class MainRun {
