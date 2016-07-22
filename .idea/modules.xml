@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/hadoop-family.iml" filepath="$PROJECT_DIR$/hadoop-family.iml" />
       <module fileurl="file://$PROJECT_DIR$/mahout-0.6/mahout-0.6.iml" filepath="$PROJECT_DIR$/mahout-0.6/mahout-0.6.iml" />
       <module fileurl="file://$PROJECT_DIR$/mahout-0.8/mahout-0.8.iml" filepath="$PROJECT_DIR$/mahout-0.8/mahout-0.8.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zookeeper/zk-web-ui/zk-web-ui.iml" filepath="$PROJECT_DIR$/zookeeper/zk-web-ui/zk-web-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zookeeper/zookeeper.iml" filepath="$PROJECT_DIR$/zookeeper/zookeeper.iml" />
     </modules>
   </component>
 </project>

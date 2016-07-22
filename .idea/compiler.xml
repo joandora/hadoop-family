@@ -25,6 +25,7 @@
         <module name="hadoop-1.1.2" />
         <module name="mahout-0.6" />
         <module name="mahout-0.8" />
+        <module name="zk-web-ui" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -32,6 +33,8 @@
       <module name="hadoop-family" target="1.7" />
       <module name="mahout-0.6" target="1.7" />
       <module name="mahout-0.8" target="1.7" />
+      <module name="zk-web-ui" target="1.7" />
+      <module name="zookeeper" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
