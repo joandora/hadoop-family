@@ -7,6 +7,9 @@ import java.util.regex.Pattern;
 
 import org.apache.hadoop.mapred.JobConf;
 
+/**
+ * http://blog.fens.me/category/hadoop-action/page/2/
+ */
 public class PageRankJob {
 
     public static final String HDFS = "hdfs://192.168.1.210:9000";
